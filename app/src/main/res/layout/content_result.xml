@@ -45,6 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/bass"
+                    android:layout_marginLeft="9dp"
                     android:textColor="#FFFF"
                     android:textSize="@dimen/result_rec_text_size"
                     android:textStyle="bold" />
@@ -110,6 +111,7 @@
                 android:background="@drawable/electric_back">
 
                 <TextView
+                    android:layout_marginLeft="9dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/electric"

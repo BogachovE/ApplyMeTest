@@ -9,9 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orhanobut.hawk.Hawk;
@@ -110,6 +114,10 @@ public class ResultActivity extends AppCompatActivity
     }
 
     public void loadPercentsView(){
+        setNewWeight(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(0).getPercent()),bass_frame);
+        setNewWeight(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(1).getPercent()),banjo_frame);
+        setNewWeight(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(2).getPercent()),guitar_frame);
+        setNewWeight(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(3).getPercent()),electric_frame);
         bass_percent.setText(String.valueOf(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(0).getPercent())) + " %");
         banjo_percent.setText(String.valueOf(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(1).getPercent())) + " %");
         guitar_percent.setText(String.valueOf(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(2).getPercent())) + " %");
@@ -120,7 +128,11 @@ public class ResultActivity extends AppCompatActivity
     public void loadResult(){
         Hawk.init(this).build();
         if (Hawk.contains("username") && Hawk.contains("choose")) {
-            userName = Hawk.get("username");
+            if (Hawk.contains("username") && !Hawk.get("username").equals("")) {
+                userName = Hawk.get("username");
+            } else {
+                userName = "Guest";
+            }
             choosenId = Hawk.get("choose");
 
             result_title.setText(
@@ -149,5 +161,11 @@ public class ResultActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(1).setChecked(true);
+    }
+
+    public void setNewWeight(Integer newWeight, FrameLayout v){
+        RelativeLayout.LayoutParams param = (RelativeLayout.LayoutParams) v.getLayoutParams();
+        param.width = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newWeight * 3, getResources().getDisplayMetrics()));
+        v.setLayoutParams(param);
     }
 }
