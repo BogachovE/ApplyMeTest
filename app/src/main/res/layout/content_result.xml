@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.applymetest.ChooseActivity"
+    android:background="@drawable/vinyl_record_background"
+   >
+
+
+    <LinearLayout
+        android:id="@+id/percent_linery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="106dp"
+        android:layout_marginLeft="40dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/bass_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="38%"
+                android:textColor="#000"
+                android:textSize="@dimen/result_rec_text_size"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/bass_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/result_rec_h"
+                android:layout_marginLeft="@dimen/result_rec_margin_left"
+                android:layout_toRightOf="@id/bass_percent"
+                android:background="@drawable/bass_back">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bass"
+                    android:textColor="#FFFF"
+                    android:textSize="@dimen/result_rec_text_size"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_rec_margin_top"
+            >
+
+            <TextView
+                android:id="@+id/banjo_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="38%"
+                android:textColor="#000"
+                android:textSize="@dimen/result_rec_text_size"
+                android:textStyle="bold" />
+            <FrameLayout
+                android:id="@+id/banjo_frame"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/result_rec_h"
+                android:background="@drawable/banjo_back"
+                android:layout_marginLeft="@dimen/result_rec_margin_left"
+                android:layout_toRightOf="@id/banjo_percent">
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/banjo_frame"
+                android:text="@string/banjo"
+                android:textColor="#000"
+                android:textSize="@dimen/result_rec_text_size"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_rec_margin_top"
+
+            >
+
+            <TextView
+                android:id="@+id/electric_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="38%"
+                android:textColor="#000"
+                android:textSize="@dimen/result_rec_text_size"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/electric_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/result_rec_h"
+                android:layout_marginLeft="@dimen/result_rec_margin_left"
+                android:layout_toRightOf="@id/electric_percent"
+                android:background="@drawable/electric_back">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/electric"
+                    android:textColor="#000"
+                    android:textSize="@dimen/result_rec_text_size"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_rec_margin_top"
+            >
+
+            <TextView
+                android:id="@+id/guitar_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="38%"
+                android:textColor="#000"
+                android:textSize="@dimen/result_rec_text_size"
+                android:textStyle="bold" />
+            <FrameLayout
+                android:id="@+id/guitar_frame"
+                android:layout_width="70dp"
+                android:layout_height="@dimen/result_rec_h"
+                android:background="@drawable/guitar_back"
+                android:layout_marginLeft="@dimen/result_rec_margin_left"
+                android:layout_toRightOf="@id/guitar_percent">
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/guitar_frame"
+                android:text="@string/guitar"
+                android:textColor="#000"
+                android:textSize="@dimen/result_rec_text_size"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/result_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/percent_linery"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="Username,\n38% also like Bass!"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+
+
+</RelativeLayout>

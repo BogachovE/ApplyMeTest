@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FAFAFA</color>
+    <color name="colorPrimaryDark">#54000000</color>
+    <color name="colorAccent">#009688</color>
+    <color name="blue">#4285F4</color>
+    <color name="electric">#F5A623</color>
+    <color name="bass">#3E50B4</color>
+    <color name="guitar">#D0011B</color>
+    <color name="banjo">#50E3C2</color>
+</resources>
+
