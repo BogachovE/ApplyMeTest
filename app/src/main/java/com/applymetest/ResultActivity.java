@@ -57,8 +57,8 @@ public class ResultActivity extends AppCompatActivity
         guitar_frame = (FrameLayout)findViewById(R.id.guitar_frame);
 
         setupPercents();
-        loadPercentsView();
         loadResult();
+        loadPercentsView();
     }
 
     @Override

@@ -105,7 +105,8 @@ public class ChooseActivity extends AppCompatActivity
             startActivity(goToPoll);
         } else if (id == R.id.nav_results) {
             Intent goToResult = new Intent(getApplicationContext(), ResultActivity.class);
-            Hawk.put("username", user_name_edit.getText());
+            String userName = String.valueOf(user_name_edit.getText());
+            Hawk.put("username", userName);
             startActivity(goToResult);
         }
 
@@ -151,5 +152,13 @@ public class ChooseActivity extends AppCompatActivity
         rv.setLayoutManager(glm);
         rv.setAdapter(insrumentsAdapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 }
