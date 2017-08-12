@@ -10,12 +10,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -32,5 +43,7 @@ dependencies {
     compile 'com.orhanobut:hawk:2.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'org.jdeferred:jdeferred-android-aar:1.2.6'
     testCompile 'junit:junit:4.12'
+    testCompile "org.robolectric:robolectric:3.4.2"
 }

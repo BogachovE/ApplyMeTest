@@ -12,15 +12,13 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orhanobut.hawk.Hawk;
 
-import Singletones.InstrumentsRepo;
+import Singletons.InstrumentsRepo;
 
 public class ResultActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,14 +33,14 @@ public class ResultActivity extends AppCompatActivity
     FrameLayout electric_frame;
     FrameLayout guitar_frame;
     String userName;
-    Integer choosenId;
+    Integer chosenId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        prepearBars();
+        prepareBars();
 
 
 
@@ -67,6 +65,7 @@ public class ResultActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            InstrumentsRepo.getInstance().updateDeferred();
             super.onBackPressed();
         }
     }
@@ -84,7 +83,6 @@ public class ResultActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_poll) {
@@ -133,13 +131,13 @@ public class ResultActivity extends AppCompatActivity
             } else {
                 userName = "Guest";
             }
-            choosenId = Hawk.get("choose");
+            chosenId = Hawk.get("choose");
 
             result_title.setText(
                     userName + ", " +
-                            String.valueOf(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(choosenId).getPercent())+"% " +
+                            String.valueOf(Math.round(InstrumentsRepo.getInstance().getInstrumentsArray().get(chosenId).getPercent())+"% " +
                                     " also like "+
-                                    getResources().getString(InstrumentsRepo.getInstance().getInstrumentsArray().get(choosenId).getTitle()) +
+                                    getResources().getString(InstrumentsRepo.getInstance().getInstrumentsArray().get(chosenId).getTitle()) +
                                     "!"
                             ));
 
@@ -148,7 +146,7 @@ public class ResultActivity extends AppCompatActivity
 
     }
 
-    public void  prepearBars(){
+    public void  prepareBars(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

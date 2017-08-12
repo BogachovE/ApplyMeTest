@@ -1,6 +1,10 @@
 package com.applymetest;
 
+import android.content.Context;
+
 import com.applymetest.Models.Instrument;
+
+import org.jdeferred.Promise;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,5 +14,5 @@ import java.util.ArrayList;
  */
 
 public interface InstrumentCreator {
-     void createInstruments() throws IOException;
+     Promise<ArrayList<Instrument>, String, String> createInstruments(Context context);
 }

@@ -3,8 +3,10 @@ package com.applymetest;
 import com.applymetest.Models.Instrument;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
@@ -14,6 +16,9 @@ import retrofit2.http.POST;
 
 public interface Api {
     @GET("/poll-results")
-    Call<ArrayList<Instrument>> getData();
+    Call<HashMap> getData();
+
+    @POST("/submit-poll")
+    Call<HashMap> addChoose(@Body String name);
 
 }

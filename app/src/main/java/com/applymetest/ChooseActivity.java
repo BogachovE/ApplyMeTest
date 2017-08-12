@@ -2,12 +2,8 @@ package com.applymetest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,40 +16,37 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.applymetest.Adapters.InsrumentsAdapter;
-import com.applymetest.Models.Instrument;
+import com.applymetest.Adapters.InstrumentsAdapter;
 import com.orhanobut.hawk.Hawk;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import Singletones.InstrumentsRepo;
+import Singletons.InstrumentsRepo;
 
 public class ChooseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView rv;
-    InsrumentsAdapter insrumentsAdapter;
+    InstrumentsAdapter instrumentsAdapter;
     EditText user_name_edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
-        prepearBars();
+        prepareBars();
         Hawk.init(this).build();
 
-        rv = (RecyclerView)findViewById(R.id.instrument_rv);
-        user_name_edit = (EditText)findViewById(R.id.user_name_edit);
+        rv = (RecyclerView) findViewById(R.id.instrument_rv);
+        user_name_edit = (EditText) findViewById(R.id.user_name_edit);
 
-        if(InstrumentsRepo.getInstance().getInstrumentsArray().size() == 0) {
-            try {
-                InstrumentsRepo.getInstance().createInstruments();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        initializeActionsAdapter();
+        InstrumentsResource instrumentsResource = new InstrumentsResource();
+        InstrumentsRepo.getInstance().setStrategy(instrumentsResource);
+        InstrumentsRepo.getInstance().createInstruments(this).then((res) -> {
+                    InstrumentsRepo.getInstance().setInstrumentsArray(res);
+                    initializeActionsAdapter();
+                }
+        );
+
+
     }
 
     @Override
@@ -76,20 +69,20 @@ public class ChooseActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_local) {
-            InstrumentsRepo.getInstance().setCreateType( new InstrumentsLocalCreator() );
-            try {
-                InstrumentsRepo.getInstance().createInstruments();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            InstrumentsRepo.getInstance().setStrategy(new InstrumentsLocalCreator());
+            InstrumentsRepo.getInstance().createInstruments(this).done((res) -> {
+                        InstrumentsRepo.getInstance().setInstrumentsArray(res);
+                    }
+            );
             return true;
         } else {
-            InstrumentsRepo.getInstance().setCreateType( new InstrumentsResourse());
-            try {
-                InstrumentsRepo.getInstance().createInstruments();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            InstrumentsResource instrumentsResource = new InstrumentsResource();
+            InstrumentsRepo.getInstance().setStrategy(instrumentsResource);
+            InstrumentsRepo.getInstance().createInstruments(this).done((res) -> {
+                        InstrumentsRepo.getInstance().setInstrumentsArray(res);
+                    }
+            );
+
             return true;
         }
     }
@@ -97,17 +90,19 @@ public class ChooseActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_poll) {
             Intent goToPoll = new Intent(getApplicationContext(), ChooseActivity.class);
             startActivity(goToPoll);
         } else if (id == R.id.nav_results) {
+
             Intent goToResult = new Intent(getApplicationContext(), ResultActivity.class);
             String userName = String.valueOf(user_name_edit.getText());
             Hawk.put("username", userName);
             startActivity(goToResult);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,7 +110,7 @@ public class ChooseActivity extends AppCompatActivity
         return true;
     }
 
-    public void  prepearBars(){
+    public void prepareBars() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -130,27 +125,29 @@ public class ChooseActivity extends AppCompatActivity
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-    public  void initializeActionsAdapter(){
-        insrumentsAdapter = new InsrumentsAdapter(InstrumentsRepo.getInstance().getInstrumentsArray()){
+    public void initializeActionsAdapter() {
+        instrumentsAdapter = new InstrumentsAdapter(InstrumentsRepo.getInstance().getInstrumentsArray()) {
             @Override
-            public void onBindViewHolder(InsrumentsHolder holder, final int position) {
+            public void onBindViewHolder(InstrumentsHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        InstrumentsRepo.getInstance().getInstrumentsArray().get(position).addLikeCount();
-                        String userName = String.valueOf(user_name_edit.getText());
-                        Hawk.put("username", userName);
-                        Hawk.put("choose", position);
-                        Intent goToResults = new Intent(getApplicationContext(), ResultActivity.class);
-                        getApplication().startActivity(goToResults);
+                        InstrumentsRepo.getInstance().addChoose(getApplicationContext(), position).then((res) -> {
+                            Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+                            String userName = String.valueOf(user_name_edit.getText());
+                            Hawk.put("username", userName);
+                            Hawk.put("choose", position);
+                            Intent goToResults = new Intent(getApplicationContext(), ResultActivity.class);
+                            getApplication().startActivity(goToResults);
+                        });
                     }
                 });
             }
         };
         GridLayoutManager glm = new GridLayoutManager(this, 2);
         rv.setLayoutManager(glm);
-        rv.setAdapter(insrumentsAdapter);
+        rv.setAdapter(instrumentsAdapter);
 
     }
 

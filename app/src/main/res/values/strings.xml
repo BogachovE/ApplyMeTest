@@ -10,4 +10,5 @@
     <string name="guitar">Guitar</string>
     <string name="banjo">Banjo</string>
     <string name="bass">Bass</string>
+    <string name="baseURL">https://demo7130406.mockable.io</string>
 </resources>
